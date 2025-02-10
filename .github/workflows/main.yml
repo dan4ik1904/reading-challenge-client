@@ -1,0 +1,33 @@
+name: Deploy to Server
+
+on:
+  workflow_dispatch
+jobs:
+ deploy:
+   runs-on: ubuntu-latest
+
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+
+     - name: Set up Node.js
+       uses: actions/setup-node@v2
+       with:
+         node-version: '20.18.2'  # Укажите нужную вам версию Node.js
+
+     - name: Install dependencies
+       run: npm install  # Установка зависимостей
+
+     - name: Build the app
+       run: npm run build  # Сборка приложения
+
+     - name: Copy files to server
+       env:
+         SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+         SERVER_IP: ${{ secrets.SERVER_IP }}
+         SERVER_USER: ${{ secrets.SERVER_USER }}
+       run: |
+         echo "$SSH_PRIVATE_KEY" > private_key
+         chmod 600 private_key
+         scp -o StrictHostKeyChecking=no -i private_key -r build/* $SERVER_USER@$SERVER_IP:/path/to/your/server/directory/
+         rm private_key
