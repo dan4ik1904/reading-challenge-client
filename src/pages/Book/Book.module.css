@@ -1,0 +1,27 @@
+.info__book .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.info__book {
+    background-color: #1d1d1d;
+    padding: 10px 15px;
+    border-radius: 7px;
+    text-align: center;
+    position: relative;
+}
+
+.info__book .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.review {
+    background-color: #1d1d1d;
+    padding: 10px 15px;
+    border-radius: 7px;
+    text-align: center;
+}

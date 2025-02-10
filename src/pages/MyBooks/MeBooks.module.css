@@ -1,0 +1,7 @@
+.page-mybook__item {
+    height: 200px;
+}
+
+.page-mybook__item.book {
+    height: 120px;
+}

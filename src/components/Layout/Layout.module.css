@@ -1,0 +1,11 @@
+.mobile {
+    position: relative;
+}
+.mobile__content {
+    height: 100%;
+    padding: 20px;
+    word-wrap: break-word;
+    display: grid;
+    gap: 15px;
+    min-height: 100vh;
+}

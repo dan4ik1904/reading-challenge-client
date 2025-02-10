@@ -1,0 +1,43 @@
+.me__item {
+    background-color: #1d1d1d;
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+}
+
+.me__info {
+    text-align: center;
+}
+
+.me__avatar__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.me__avatar__wrapper .avatar {
+    width: 150px;
+    height: 150px;
+    background: #0077fe;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 70px;
+}
+
+.me__delete {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.delete {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}

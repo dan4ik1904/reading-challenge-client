@@ -1,0 +1,30 @@
+.page__item {
+    background-color: #1d1d1d;
+    border-radius: 11px;
+    padding: 20px;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    position: relative;
+}
+
+.page__items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 50px 0;
+}
+
+
+.info__user {
+    font-weight: 500;
+    width: 65px;
+}
+
+
+.title {
+    font-weight: 500;
+    font-size: 25px;
+    margin-top: 20px;
+}

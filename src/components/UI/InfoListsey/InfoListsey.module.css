@@ -1,0 +1,15 @@
+.litsey__logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.litsey__logo img {
+    width: 250px;
+    border-radius: 30%;
+}
+
+.info span {
+    font-weight: 600;
+    font-size: 25px;
+}

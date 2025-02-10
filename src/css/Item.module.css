@@ -1,0 +1,28 @@
+.item {
+    background-color: #1d1d1d;
+    border-radius: 7px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: #161616;
+}
+
+.item .item__info {
+    display: flex;
+    flex-direction: column;
+}
+
+.highlight {
+    color: #646cff;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 50px 0;
+}

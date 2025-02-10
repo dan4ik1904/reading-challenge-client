@@ -1,0 +1,19 @@
+.users {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 100px;
+}
+
+.users .user {
+    background-color: #1d1d1d;
+    border-radius: 7px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.users .user .user__info-book {
+    display: flex;
+    flex-direction: column;
+}
