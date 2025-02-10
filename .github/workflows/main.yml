@@ -31,4 +31,4 @@ jobs:
          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}  # Добавьте переменную для пароля
        run: |
          echo "Copying files to the server..."
-         sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* $SERVER_USER@$SERVER_IP:/var/www/
+         sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* $SERVER_USER@$SERVER_IP:/var/www/reading-challenge-client/dist
