@@ -29,5 +29,5 @@ jobs:
        run: |
          echo "$SSH_PRIVATE_KEY" > private_key
          chmod 600 private_key
-         scp -o StrictHostKeyChecking=no -i private_key -r build/* $SERVER_USER@$SERVER_IP:/path/to/your/server/directory/
+         scp -o StrictHostKeyChecking=no -i private_key -r dist/* $SERVER_USER@$SERVER_IP:/var/www/
          rm private_key
