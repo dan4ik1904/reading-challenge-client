@@ -1,0 +1,34 @@
+name: Deploy to Server
+
+on:
+  workflow_dispatch
+jobs:
+  deploy:
+   runs-on: ubuntu-latest
+  
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+  
+     - name: Set up Node.js
+       uses: actions/setup-node@v2
+       with:
+         node-version: '20.18.2'  # Укажите нужную вам версию Node.js
+  
+     - name: Install dependencies
+       run: npm install  # Установка зависимостей
+  
+     - name: Build the app
+       run: npm run build  # Сборка приложения
+  
+     - name: Install sshpass
+       run: sudo apt-get install sshpass
+  
+     - name: Copy files to server
+       env:
+         SERVER_IP: ${{ secrets.SERVER_IP }}
+         SERVER_USER: ${{ secrets.SERVER_USER }}
+         SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}  # Добавьте переменную для пароля
+       run: |
+         echo "Copying files to the server..."
+         sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -r dist/* $SERVER_USER@$SERVER_IP:/var/www/reading-challenge
