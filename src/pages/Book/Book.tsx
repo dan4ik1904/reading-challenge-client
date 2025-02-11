@@ -30,7 +30,7 @@ const Book = observer(() => {
 
     const deleteBook = () => {
         if(id)books.deleteBook(id, tgID)
-        nav('/mybooks')
+        nav(`/users/${books?.book?.userId}`)
     }
 
     return (
