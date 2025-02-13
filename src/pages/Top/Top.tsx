@@ -11,6 +11,7 @@ const Top: FC = observer(() => {
 
   useEffect(() => {
     // Сбрасываем пользователей при первом рендере
+    console.log(2123)
     users.resetTopUsers();
     users.page = 1; // Устанавливаем начальную страницу
     fetchUsers(); // Загружаем пользователей при монтировании
