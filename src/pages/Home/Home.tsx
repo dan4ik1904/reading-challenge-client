@@ -27,7 +27,7 @@ const Home: FC = observer(() => {
   return (
     <div className={pageStyles.page__items}>
       <InfoLitsey />
-      {users.topFiveUsers && <TopFiveUser user={data} title="Топ лице345345345345345345я" users={users.topFiveUsers} />}
+      {users.topFiveUsers && <TopFiveUser user={data} title="Топ лицея" users={users.topFiveUsers} />}
       {isAuthenticated && users.classmates && <TopFiveUser user={data} title={"Топ класса"} users={users.classmates} />}
     </div>
   );
