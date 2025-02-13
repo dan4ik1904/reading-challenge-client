@@ -123,6 +123,7 @@ class UserStore {
             });
         } catch (error) {
             runInAction(() => {
+                console.log(error)
                 this.error = error;
                 this.isLoading = false; // Обрабатываем ошибку и останавливаем загрузку
             });
