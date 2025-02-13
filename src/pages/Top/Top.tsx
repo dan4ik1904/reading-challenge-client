@@ -21,6 +21,7 @@ const Top: FC = observer(() => {
     users.isFetching = true; // Устанавливаем флаг загрузки
     try {
       await users.fetchTopUsers(users.page, itemsPerPage);
+      console.log(users.topUsers)
       users.isLoadingMore = false; // Сбрасываем флаг загрузки после успешного запроса
     } catch (error) {
       console.error("Error fetching users:", error);
