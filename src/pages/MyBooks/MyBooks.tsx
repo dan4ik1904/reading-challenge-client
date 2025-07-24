@@ -4,7 +4,7 @@ import BookCard from "../../components/UI/Books/BookCard"
 import Loading from "../../components/UI/Loading/Loading"
 import pageStyles from '../../css/page.module.css'
 import useTelegram from "../../hooks/useTelegram"
-import { useGetMyBooksQuery } from '../../services/userApi'
+import { useGetMyBooksQuery } from '../../services/booksApi'
 import styles from './MyBooks.module.css'
 
 

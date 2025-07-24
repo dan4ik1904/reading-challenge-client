@@ -7,7 +7,8 @@ import TopFiveUser from "../../components/UI/TopItems/TopFiveUser"
 import pageStyles from '../../css/page.module.css'
 import useTelegram from "../../hooks/useTelegram"
 import { useGetMeQuery, useLogoutMutation } from '../../services/authApi'
-import { useGetClassmatesQuery, useGetMyBooksQuery, useGetTopFiveUsersQuery } from '../../services/userApi'
+import { useGetClassmatesQuery, useGetTopFiveUsersQuery } from '../../services/userApi'
+import { useGetMyBooksQuery } from '../../services/booksApi'
 
 const Me = () => {
   const { data: authData, isLoading: authLoading } = useGetMeQuery()

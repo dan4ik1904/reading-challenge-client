@@ -8,29 +8,29 @@ export const booksApi = createApi({
   baseQuery: fetchBaseQuery({ 
 			baseUrl: serverURL + '/api',
 			prepareHeaders: (headers, { getState }) => {
-        const state = getState() as RootState
-        const userId = state.telegram.initData?.user?.id
-        
-        if (userId) {
-          headers.set('Authorization', userId.toString())
-        }
-        
-        return headers
+      const state = getState() as RootState
+      const userId = state.telegram.initData?.user?.id
+      
+      if (userId) {
+        headers.set('Authorization', userId.toString())
       }
+      
+      return headers
+    }
 		}),
-  tagTypes: ['Books', 'Book'],
+  tagTypes: ['Books', 'Book', 'MyBooks'],
   endpoints: (builder) => ({
     getAllBooks: builder.query<IBook[], void>({
       query: () => '/books',
       providesTags: ['Books'],
     }),
-    getOneBook: builder.query<IBook, string>({
+    getOneBook: builder.query<IBook, number>({
       query: (id) => `/books/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Book', id }],
+      providesTags: ['Book'],
     }),
-    getBooksUser: builder.query<IBook[], string>({
+    getBooksUser: builder.query<IBook[], number>({
       query: (id) => `/books/top/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Books', id }],
+      providesTags: ['Books', 'MyBooks'],
     }),
     createBook: builder.mutation<IBook, { data: ICreateBook; tgID: number }>({
       query: ({ data, tgID }) => ({
@@ -41,9 +41,9 @@ export const booksApi = createApi({
           Authorization: tgID.toString(),
         },
       }),
-      invalidatesTags: ['Books'],
+      invalidatesTags: ['MyBooks', 'Book', 'Books'],
     }),
-    deleteBook: builder.mutation<void, { id: string; tgID: number }>({
+    deleteBook: builder.mutation<void, { id: number; tgID: number }>({
       query: ({ id, tgID }) => ({
         url: `/books/${id}`,
         method: 'DELETE',
@@ -51,7 +51,16 @@ export const booksApi = createApi({
           Authorization: tgID.toString(),
         },
       }),
-      invalidatesTags: ['Books', 'Book'],
+      invalidatesTags: ['Books', 'Book', 'MyBooks'],
+    }),
+    getMyBooks: builder.query<IBook[], number>({
+      query: (tgId) => ({
+        url: '/auth/mybooks',
+        headers: {
+          'Telegram-ID': tgId.toString(),
+        },
+      }),
+      providesTags: ['MyBooks']
     }),
   }),
 })
@@ -62,4 +71,5 @@ export const {
   useGetBooksUserQuery,
   useCreateBookMutation,
   useDeleteBookMutation,
+  useGetMyBooksQuery
 } = booksApi

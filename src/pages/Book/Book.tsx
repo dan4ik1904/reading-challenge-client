@@ -11,8 +11,8 @@ import styles from './Book.module.css'
 const Book = () => {
     const [isActiveButtonDelete, setIsActiveButtonDelete] = useState(false)
     const params = useParams()
-    const id = params.id as string
-    const { data: authData } = useAuth()
+    const id = Number(params.id)
+    const { user: authData } = useAuth()
     const { tgID } = useTelegram()
     const navigate = useNavigate()
 
@@ -20,11 +20,11 @@ const Book = () => {
     const [deleteBookMutation] = useDeleteBookMutation()
 
     const handleDeleteBook = async () => {
-        if (!id) return
+        if (!id || !tgID) return
         
         try {
             await deleteBookMutation({ id, tgID }).unwrap()
-            navigate(`/users/${book?.userId}`)
+            navigate(`/users/${book?.userId}/books`)
         } catch (error) {
             console.error("Ошибка при удалении книги:", error)
             setIsActiveButtonDelete(false)

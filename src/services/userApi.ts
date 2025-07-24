@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { serverURL } from '../Data/URL'
-import { IBook } from '../types/book.interface'
 import { IUser } from '../types/user.interface'
 import { RootState } from './store'
 
@@ -19,15 +18,15 @@ export const usersApi = createApi({
         return headers
       }
 	}),
-  tagTypes: ['Users', 'User'],
+  tagTypes: ['Users', 'User', 'MyBooks'],
   endpoints: (builder) => ({
     getAllUsers: builder.query<IUser[], void>({
       query: () => '/users',
       providesTags: ['Users'],
     }),
-    getOneUser: builder.query<IUser, string>({
+    getOneUser: builder.query<IUser, number>({
       query: (id) => `/users/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: ['User'],
     }),
     getClassmates: builder.query<IUser[], number>({
       query: (tgId) => ({
@@ -47,15 +46,7 @@ export const usersApi = createApi({
     }),
     getTopFiveUsers: builder.query<IUser[], void>({
       query: () => '/users/top?limit=5&page=1',
-    }),
-    getMyBooks: builder.query<IBook[], number>({
-      query: (tgId) => ({
-        url: '/auth/mybooks',
-        headers: {
-          'Telegram-ID': tgId.toString(),
-        },
-      }),
-    }),
+    })
   }),
 })
 
@@ -66,5 +57,4 @@ export const {
   useGetTopUsersQuery,
   useGetTopFiveUsersQuery,
 	useLazyGetTopFiveUsersQuery,
-  useGetMyBooksQuery,
 } = usersApi

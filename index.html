@@ -14,34 +14,34 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
       // Только для development режима
-        window.Telegram = {
-          WebApp: {
-            initDataUnsafe: {
-              user: {
-                id: 202444855,
-                first_name: "Test",
-                last_name: "User",
-                username: "test_user",
-                is_premium: true
-              }
-            },
-            themeParams: {
-              bg_color: "#18222d",
-              text_color: "#ffffff",
-              button_color: "#2ea6ff",
-              button_text_color: "#ffffff"
-            },
-            expand: () => console.log("Telegram WebApp expanded"),
-            close: () => console.log("Telegram WebApp closed"),
-            showPopup: (params) => console.log("Show popup:", params),
-            onEvent: (event, handler) => console.log(`Event ${event} subscribed`),
-            offEvent: (event, handler) => console.log(`Event ${event} unsubscribed`),
-            sendData: (data) => console.log("Data sent:", data),
-            isExpanded: true,
-            version: "6.7",
-            platform: "web"
-          }
-        }
+        // window.Telegram = {
+        //   WebApp: {
+        //     initDataUnsafe: {
+        //       user: {
+        //         id: 2024448556,
+        //         first_name: "Test",
+        //         last_name: "User",
+        //         username: "test_user",
+        //         is_premium: true
+        //       }
+        //     },
+        //     themeParams: {
+        //       bg_color: "#18222d",
+        //       text_color: "#ffffff",
+        //       button_color: "#2ea6ff",
+        //       button_text_color: "#ffffff"
+        //     },
+        //     expand: () => console.log("Telegram WebApp expanded"),
+        //     close: () => console.log("Telegram WebApp closed"),
+        //     showPopup: (params) => console.log("Show popup:", params),
+        //     onEvent: (event, handler) => console.log(`Event ${event} subscribed`),
+        //     offEvent: (event, handler) => console.log(`Event ${event} unsubscribed`),
+        //     sendData: (data) => console.log("Data sent:", data),
+        //     isExpanded: true,
+        //     version: "6.7",
+        //     platform: "web"
+        //   }
+        // }
     </script>
   </body>
 </html>

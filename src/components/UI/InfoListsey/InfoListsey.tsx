@@ -1,4 +1,5 @@
-import { FC } from "react"
+import { useMotionValue, useSpring } from "framer-motion"
+import { FC, useEffect, useState } from "react"
 import { FaBook } from "react-icons/fa6"
 import pageStyles from '../../../css/page.module.css'
 import { useGetAllBooksQuery } from "../../../services/booksApi"
@@ -6,6 +7,26 @@ import styles from './InfoListsey.module.css'
 
 const InfoLitsey: FC = () => {
     const { data: books, isLoading, isError } = useGetAllBooksQuery();
+    const count = useMotionValue(0);
+    const springCount = useSpring(count, {
+        damping: 100,
+        stiffness: 100,
+    });
+    const [displayCount, setDisplayCount] = useState(0);
+
+    useEffect(() => {
+        const unsubscribe = springCount.onChange((latest) => {
+            setDisplayCount(Math.floor(latest));
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        if (books?.length) {
+            count.set(books.length);
+        }
+    }, [books]);
 
     return (
         <div className={pageStyles.page__item + ' ' + 'item'}>
@@ -18,7 +39,10 @@ const InfoLitsey: FC = () => {
                 ) : isError ? (
                     <span>error</span>
                 ) : (
-                    <span>{books?.length ?? 0}/500<FaBook color='white' fontSize={'26px'} /></span>
+                    <span>
+                        {displayCount}/500
+                        <FaBook color='white' fontSize={'26px'} />
+                    </span>
                 )}
             </div>
         </div>

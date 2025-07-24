@@ -32,7 +32,7 @@ const TopFiveUser = observer(({ users, title, user }: IProps) => {
         const names = fullName.split(' ');
         if (names.length === 1) return names[0];
         
-        return `${names[0]} ${names[1][0]}.`;
+        return `${names[1]}`;
     }
 
     // List animations

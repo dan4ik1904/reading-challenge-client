@@ -92,7 +92,11 @@ const TopFiveBook = observer(({ books, title, currentUser }: IProps) => {
                                 >
                                     <div className={styles.place}>{index + 1}</div>
                                     <div className={styles.name} title={book.name}>
-                                        {book.name}
+                                        {book.name.length > 25 ? ( 
+                                            <>{book.name.slice(0, 25)}...</>
+                                        ) : (
+                                            <>{book.name}</>
+                                        )}
                                     </div>
                                     <div className={styles.info}>
                                         <span>{book.pageCount} <FaBook /></span>

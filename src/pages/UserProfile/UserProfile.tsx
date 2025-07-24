@@ -10,7 +10,7 @@ import { useGetOneUserQuery, useLazyGetTopFiveUsersQuery } from '../../services/
 
 const UserProfile = () => {
   const params = useParams();
-  const userId = params.userId as string;
+  const userId = Number(params.userId)
 
   // Fetch user data
   const { data: user, isLoading: userLoading } = useGetOneUserQuery(userId, { skip: !userId });

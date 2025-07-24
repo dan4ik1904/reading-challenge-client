@@ -1,5 +1,5 @@
 export interface IUser {
-    id: string;
+    id: number;
     booksCount: number;
     className: string;
     fullName: string;

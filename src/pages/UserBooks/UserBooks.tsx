@@ -1,12 +1,23 @@
-import { useParams } from "react-router-dom"
+import { useEffect } from 'react'
+import { MdMenuBook } from 'react-icons/md'
+import { useNavigate, useParams } from "react-router-dom"
 import BookCard from "../../components/UI/Books/BookCard"
 import Loading from "../../components/UI/Loading/Loading"
-import itemStyles from '../../css/Item.module.css'
+import pageStyles from '../../css/page.module.css'
+import useAuth from '../../hooks/useAuth'
 import { useGetBooksUserQuery } from "../../services/booksApi"
+import styles from '../MyBooks/MyBooks.module.css'
 
 const UserBooks = () => {
     const params = useParams();
-    const userId = params.userId as string;
+    const userId = Number(params.userId)
+
+    const { user } = useAuth()
+    const nav = useNavigate()
+
+    useEffect(() => {
+        if(user?.id == userId) nav('/mybooks')
+    }, [user])
     
     const { 
         data: userBooks = [], 
@@ -18,16 +29,20 @@ const UserBooks = () => {
     if (isError) return <div>Error loading books</div>;
 
     return (
-        <div className={itemStyles.items}>
+        <div className={styles.container}>
             {userBooks.length > 0 ? (
-                userBooks.map((book) => (
-                    <BookCard 
-                        key={book.id} 
-                        book={book} 
-                    />
-                ))
+                <div className={styles.booksGrid + ' ' + pageStyles.page__item}>
+                    {userBooks.map((book) => (
+                        <BookCard key={book.id} book={book} />
+                    ))}
+                </div>
             ) : (
-                <h2 style={{ textAlign: 'center' }}>Здесь пока ничего нет :(</h2>
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIllustration}>
+                        <MdMenuBook size={64} color="#4A4A4A" />
+                    </div>
+                    <h2>Библиотека пуста</h2>
+                </div>
             )}
         </div>
     );

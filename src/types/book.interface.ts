@@ -5,7 +5,7 @@ export interface IBook {
     pageCount: number;
     rating: number;
     review: string;
-    userId: string;
+    userId: number;
 }
 
 export interface ICreateBook {

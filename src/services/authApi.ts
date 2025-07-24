@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { serverURL } from '../Data/URL'
+import { IUser } from '../types/user.interface'
 import { RootState } from './store'
 
 export const authApi = createApi({
@@ -19,7 +20,7 @@ export const authApi = createApi({
   }),
   tagTypes: ['Me'],
   endpoints: (builder) => ({
-    getMe: builder.query<any, void>({
+    getMe: builder.query<IUser, void>({
       query: () => 'me',
       providesTags: ['Me']
     }),

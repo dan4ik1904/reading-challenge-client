@@ -21,7 +21,6 @@ const Home: FC = () => {
   const { 
     data: classmates, 
     isLoading: classmatesLoading,
-    isFetching: classmatesFetching
   } = useGetClassmatesQuery(tgID!, { skip: !tgID });
 
   // Сброс и обновление данных при изменении tgID

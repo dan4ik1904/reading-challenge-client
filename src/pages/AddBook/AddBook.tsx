@@ -27,7 +27,7 @@ const AddBook = () => {
     }
 
     const send = async() => {
-        if(!avtor || !nameBook || !countPage || !rating || !review) return setError('Введите коректные данные')
+        if(!avtor || !nameBook || !countPage || !rating || !review || !tgID) return setError('Введите коректные данные')
         createBook({data: {
             author: avtor,
             name: nameBook,
