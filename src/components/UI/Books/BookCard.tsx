@@ -1,32 +1,29 @@
-import { FC } from "react";
-import { IBook } from "../../../types/book.interface";
-import { MdMenuBook } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import itemStyles from '../../../css/Item.module.css'
-
+import { FC } from "react"
+import { MdMenuBook } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
+import { IBook } from "../../../types/book.interface"
+import styles from './BookCard.module.css'
 
 interface IProps {
     book: IBook
 }
 
-const BookCard: FC<IProps> = ({book}) => {
-
-    const nav = useNavigate()
+const BookCard: FC<IProps> = ({ book }) => {
+    const navigate = useNavigate()
 
     return (
-        <div className={itemStyles.item} onClick={() => nav(`/books/${book.id}`)}>
-            <div className="item__info__main">
-                <h3>{book.name}</h3>
-                <span>{book.author}</span>
+        <div className={styles.card} onClick={() => navigate(`/books/${book.id}`)}>
+            <div className={styles.content}>
+                <h3 className={styles.title}>{book.name}</h3>
+                <p className={styles.author}>{book.author}</p>
             </div>
-            <div className="item__info">
-                <span>
-                    <span className="highlight">{book.pageCount}</span> <MdMenuBook color="white" fontSize={'22px'} />
+            <div className={styles.footer}>
+                <span className={styles.pageCount}>
+                    {book.pageCount} <MdMenuBook className={styles.icon} />
                 </span>
             </div>
         </div>
-        
-    );
+    )
 }
 
 export default BookCard

@@ -1,0 +1,163 @@
+.title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.booksList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.bookItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 15px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bookItem:hover {
+    background-color: #333;
+    transform: translateX(3px);
+}
+
+.place {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.name {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.info {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Highlight for top 3 places */
+.bookItem:first-child {
+    background-color: #3a3a3a;
+    border-left: 3px solid gold;
+}
+
+.bookItem:first-child .place {
+    color: gold;
+}
+
+.bookItem:nth-child(2) {
+    border-left: 3px solid silver;
+}
+
+.bookItem:nth-child(2) .place {
+    color: silver;
+}
+
+.bookItem:nth-child(3) {
+    border-left: 3px solid #cd7f32;
+}
+
+.bookItem:nth-child(3) .place {
+    color: #cd7f32;
+}
+
+.all {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    color: #17999D;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.all:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries for different screen sizes */
+@media (min-width: 400px) {
+    .bookItem {
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 15px;
+    }
+    
+    .place {
+        margin-right: 15px;
+        margin-bottom: 0;
+        width: 20px;
+    }
+    
+    .name {
+        margin-bottom: 0;
+        flex-grow: 1;
+    }
+}
+
+@media (min-width: 500px) {
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    
+    .booksList {
+        gap: 12px;
+        padding: 0;
+    }
+    
+    .bookItem {
+        padding: 14px 20px;
+    }
+    
+    .place {
+        font-size: 16px;
+        width: 24px;
+        margin-right: 20px;
+    }
+    
+    .name {
+        font-size: 15px;
+    }
+    
+    .info {
+        font-size: 14px;
+        gap: 20px;
+        flex-wrap: nowrap;
+    }
+    
+    .all {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) {
+    .bookItem:hover {
+        transform: translateX(5px);
+    }
+    
+    .bookItem:first-child,
+    .bookItem:nth-child(2),
+    .bookItem:nth-child(3) {
+        border-left-width: 4px;
+    }
+}

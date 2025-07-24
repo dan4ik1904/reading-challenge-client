@@ -3,7 +3,7 @@ export interface IBook {
     author: string;
     name: string;
     pageCount: number;
-    ratting: number;
+    rating: number;
     review: string;
     userId: string;
 }
@@ -12,6 +12,6 @@ export interface ICreateBook {
     author: string;
     name: string;
     pageCount: number;
-    ratting: number;
+    rating: number;
     review: string;
 }

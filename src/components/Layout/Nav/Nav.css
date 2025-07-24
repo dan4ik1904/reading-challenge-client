@@ -1,30 +1,52 @@
-.mobile .mobile__bottom .nav a img {
-    max-height: 40px;
-}
-
 .mobile__bottom {
     position: fixed;
-    width: 100%;
-    height: 50px;
     bottom: 0;
-    left: 0;
-    border-top: 2px solid rgb(0, 0, 0);
-    background-color: #1d1d1d;
-    z-index: 100;
-}
-
-.nav {
+    width: 100%;
+    background: #19191B;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    z-index: 1000;
+  }
+  
+  .nav.container {
     display: flex;
-    justify-content: space-between;
-    padding: 7px;
-}
-
-.mobile__bottom .nav a img {
-    height: 40px;
-}
-
-.mobile__bottom .nav a:hover {
-    transition: 0.2s;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 7px;
-}
+    justify-content: space-around;
+    align-items: center;
+    max-width: 100%;
+  }
+  
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #615F68;
+    text-decoration: none;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  
+  .nav-link.active {
+    color: #17999D; /* Ant Design primary color */
+    transform: translateY(-4px);
+  }
+  
+  .nav-link.active svg {
+    color: #17999D !important;
+  }
+  
+  /* iOS safe area padding */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .mobile__bottom {
+      padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    }
+  }
+  
+  /* Анимация иконок */
+  .nav-link svg {
+    transition: transform 0.2s, color 0.2s;
+  }
+  
+  .nav-link:active svg {
+    transform: scale(0.9);
+  }

@@ -1,35 +1,46 @@
+import { CgProfile } from 'react-icons/cg'
+import { IoHomeOutline } from "react-icons/io5"
+import { LiaMedalSolid, LiaUserFriendsSolid } from 'react-icons/lia'
+import { PiBooks } from 'react-icons/pi'
+import { Link, useLocation } from 'react-router-dom'
 import './Nav.css'
-import { Link } from 'react-router-dom'
-import { IoHome } from "react-icons/io5";
-import { ImBooks } from "react-icons/im";
-import { FaMedal } from "react-icons/fa";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { FaUserCircle } from 'react-icons/fa'
-
 
 function Nav() {
+  const location = useLocation()
+  const currentPath = location.pathname
+
+  // Определяем активные маршруты
+  const isActive = (path: string) => {
+    // Для главной страницы точное совпадение
+    if (path === '/') return currentPath === path
+    // Для остальных - начало пути
+    return currentPath.startsWith(path)
+  }
+
+  const navItems = [
+    { path: '/', icon: <IoHomeOutline fontSize={'40px'}/>, label: 'Главная' },
+    { path: '/mybooks', icon: <PiBooks fontSize={'40px'}/>, label: 'Книги' },
+    { path: '/top', icon: <LiaMedalSolid fontSize={'40px'}/>, label: 'Топ' },
+    { path: '/classmates', icon: <LiaUserFriendsSolid fontSize={'40px'}/>, label: 'Класс' },
+    { path: '/me', icon: <CgProfile fontSize={'40px'}/>, label: 'Профиль' }
+  ]
 
   return (
     <div className="mobile__bottom">
       <div className="nav container">
-          <Link to={'/'}>
-            <IoHome color='white' fontSize={'40px'}/>
+        {navItems.map((item) => (
+          <Link 
+            to={item.path} 
+            key={item.path}
+            className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
+            aria-label={item.label}
+          >
+            {item.icon}
           </Link>
-          <Link to={'/mybooks'}>
-            <ImBooks color='white' fontSize={'40px'}/>
-          </Link>
-          <Link to={'/top'}>
-            <FaMedal color='white' fontSize={'40px'}/>
-          </Link>
-          <Link to={'/classmates'}>
-            <BsFillPeopleFill color='white' fontSize={'40px'}/>
-          </Link>
-          <Link to={'/me'}>
-            <FaUserCircle fontSize={'40px'} color="white" />
-          </Link>
+        ))}
       </div>
     </div>
   )
 }
 
-export default Nav;
+export default Nav

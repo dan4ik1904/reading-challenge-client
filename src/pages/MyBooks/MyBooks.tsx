@@ -1,49 +1,65 @@
-import { useEffect } from "react"
-import NoAuth from "../../components/UI/Auth/NoAuth"
-import Loading from "../../components/UI/Loading/Loading"
-import useAuth from "../../hooks/useAuth"
-import books from "../../stores/books"
-import useTelegram from "../../hooks/useTelegram"
+import { MdMenuBook } from 'react-icons/md'
 import AddBook from "../../components/UI/Books/AddBookButton"
-import { observer } from "mobx-react-lite"
 import BookCard from "../../components/UI/Books/BookCard"
-import itemStyles from '../../css/Item.module.css'
+import Loading from "../../components/UI/Loading/Loading"
+import pageStyles from '../../css/page.module.css'
+import useTelegram from "../../hooks/useTelegram"
+import { useGetMyBooksQuery } from '../../services/userApi'
+import styles from './MyBooks.module.css'
 
 
-const MyBooks = observer(() => {
-    const {isAuthenticated, loading} = useAuth()
-    const { tgID } = useTelegram()
+const MyBooks = () => {
+    const { tgID } = useTelegram();
 
-    useEffect(() => {
-        try {
-            books.fetchMybooks(tgID)
-        } catch (error) {
-            
-        }
-        
-    }, [tgID])
+    const { 
+        data: myBooks = [], 
+        isLoading, 
+        isError, 
+        refetch 
+    } = useGetMyBooksQuery(tgID!, { skip: !tgID });
 
-    if(loading === true) return <Loading />
-
+    if (isLoading) return (
+        <div className={styles.loadingContainer}>
+            <Loading />
+        </div>
+    );
     
-    if(isAuthenticated === false) return <NoAuth />
-    return (
-        <div className={itemStyles.items}>
-            <AddBook />
-            {books.myBooks.length > 0 ? (
-                books.myBooks.map((book) => (
-                    book && (
-                        <BookCard
-                            book={book}
-                        />
-                    )
-                ))
-            ): (
-                <h2 style={{textAlign: 'center' }}>Здесь пока ничего нет :(</h2>
-            )}
+    if (isError) return (
+        <div className={styles.errorContainer}>
+            <div className={styles.errorContent}>
+                <h2>Ошибка загрузки</h2>
+                <p>Попробуйте обновить страницу</p>
+                <button 
+                    className={styles.retryButton}
+                    onClick={() => refetch()}
+                >
+                    Повторить
+                </button>
+            </div>
         </div>
     );
 
-})
+    return (
+        <div className={styles.container}>
+            <AddBook />
+            
+            {myBooks.length > 0 ? (
+                <div className={styles.booksGrid + ' ' + pageStyles.page__item}>
+                    {myBooks.map((book) => (
+                        <BookCard key={book.id} book={book} />
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIllustration}>
+                        <MdMenuBook size={64} color="#4A4A4A" />
+                    </div>
+                    <h2>Ваша библиотека пуста</h2>
+                    <p>Добавьте свою первую книгу</p>
+                </div>
+            )}
+        </div>
+    );
+};
 
-export default MyBooks
+export default MyBooks;

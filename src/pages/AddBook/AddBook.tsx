@@ -1,11 +1,9 @@
-import { FormEvent, useState } from "react";
-import CustomSelectArray from "../../components/UI/Select/SelectArray";
-import books from "../../stores/books";
-import useTelegram from "../../hooks/useTelegram";
-import Loading from "../../components/UI/Loading/Loading";
-import { useNavigate } from "react-router-dom";
-import NoAuth from "../../components/UI/Auth/NoAuth";
-import useAuth from "../../hooks/useAuth";
+import { FormEvent, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Loading from "../../components/UI/Loading/Loading"
+import CustomSelectArray from "../../components/UI/Select/SelectArray"
+import useTelegram from "../../hooks/useTelegram"
+import { useCreateBookMutation } from '../../services/booksApi'
 
 
 
@@ -13,14 +11,14 @@ const AddBook = () => {
     const [avtor, setAvtor] = useState('')
     const [nameBook, setNameBook] = useState('')
     const [countPage, setCountPage] = useState(0)
-    const [ratting, setRatting] = useState(0)
+    const [rating, setRating] = useState(0)
     const [review, setReview] = useState('')
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
     const [isOpenRatting, setIsOpenRatting] = useState(false)
 
     const { tgID } = useTelegram()
-    const { isAuthenticated, loading: loadingAuth } = useAuth()
+
+    const [createBook, {isLoading}] = useCreateBookMutation()
 
     const navigate = useNavigate()
 
@@ -29,14 +27,14 @@ const AddBook = () => {
     }
 
     const send = async() => {
-        if(!avtor || !nameBook || !countPage || !ratting || !review) return setError('Введите коректные данные')
-        books.createBook({
+        if(!avtor || !nameBook || !countPage || !rating || !review) return setError('Введите коректные данные')
+        createBook({data: {
             author: avtor,
             name: nameBook,
             pageCount: countPage,
-            ratting,
+            rating,
             review
-        }, tgID, setLoading)
+        }, tgID})
         .finally(() => {
             navigate('/mybooks')
         })
@@ -44,9 +42,8 @@ const AddBook = () => {
         
     }
 
-    if(loading === true) return <Loading />
+    if(isLoading) return <Loading />
 
-    if(isAuthenticated === false && loadingAuth === false) return <NoAuth />
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -91,7 +88,7 @@ const AddBook = () => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="username" className="form-label" style={{ color: '#888' }}>Рейтинг</label>
-                                <CustomSelectArray isOpen={isOpenRatting} setIsOpen={setIsOpenRatting}  options={['1', '2', '3', '4', '5']} onChange={value => setRatting(Number(value))} placeholder='Рейтинг'/>
+                                <CustomSelectArray isOpen={isOpenRatting} setIsOpen={setIsOpenRatting}  options={['1', '2', '3', '4', '5']} onChange={value => setRating(Number(value))} placeholder='Рейтинг'/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label" style={{ color: '#888' }}>Ревью</label>
@@ -104,7 +101,7 @@ const AddBook = () => {
                                     style={{resize: 'none'}}
                                 />
                             </div>
-                            <button onClick={() => send()} type="submit" className="btn btn-primary w-100" style={{ backgroundColor: '#646cff', border: 'none', marginTop: '10px' }}>
+                            <button onClick={() => send()} type="submit" className="btn btn-primary w-100" style={{ backgroundColor: '#17999D', border: 'none', marginTop: '10px' }}>
                                 Добавить
                             </button>
                         </form>

@@ -1,51 +1,35 @@
-import { useEffect, useState } from 'react';
-import useTelegram from './useTelegram';
-import api from '../services/axios';
-import { IUser } from '../types/user.interface';
+import { useEffect } from 'react'
+import { useGetMeQuery } from '../services/authApi'
+import { selectTelegramUserId } from '../services/telegramSlice'
+import { useAppSelector } from './useRedux'
 
 const useAuth = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState<IUser | null>(null);
-    const { tgID } = useTelegram();
+  const tgID = useAppSelector(selectTelegramUserId)
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch
+  } = useGetMeQuery(undefined, {
+    skip: !tgID
+  })
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            setLoading(true);
+  useEffect(() => {
+    if (tgID) {
+      refetch()
+    }
+  }, [tgID, refetch])
 
-            if (!tgID) {
-                console.error('Telegram API не инициализирован или ID пользователя недоступен');
-                setLoading(false);
-                return;
-            }
+  return {
+    user: data,
+    isAuthenticated: !isError && !!data,
+    isLoading: isLoading || !tgID,
+    isError,
+    error,
+    refetchAuth: refetch,
+    tgID
+  }
+}
 
-            try {
-                const response = await api.get('/auth/me', {
-                    headers: {
-                        Authorization: tgID
-                    }
-                });
-
-                const dataRes = response.data;
-                setData(dataRes);
-
-                if (response.status === 200) {
-                    setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
-                }
-            } catch (error) {
-                console.error('Ошибка при проверке аутентификации:', error);
-                setIsAuthenticated(false);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        checkAuth();
-    }, [tgID]);
-
-    return { isAuthenticated, loading, data };
-};
-
-export default useAuth;
+export default useAuth

@@ -1,37 +1,39 @@
-import { observer } from "mobx-react-lite"
-import users from "../../stores/users"
+import { useEffect, useState } from "react"
 import Loading from "../../components/UI/Loading/Loading"
 import UserTopCard from "../../components/UI/UserTopCard/UserTopCard"
-import { useEffect } from "react"
-import useTelegram from "../../hooks/useTelegram"
-import NoAuth from "../../components/UI/Auth/NoAuth"
-import useAuth from "../../hooks/useAuth"
 import itemStyles from '../../css/Item.module.css'
+import useTelegram from "../../hooks/useTelegram"
+import { useGetClassmatesQuery } from '../../services/userApi'
 
+const Classmates = () => {
+    const { tgID } = useTelegram();
+    const [skip, setSkip] = useState(true);
 
-const Classmates = observer(() => {
-
-    const { tgID } = useTelegram()
-    const { isAuthenticated, loading } = useAuth()
-
+    // Включаем запрос только когда tgID доступен
     useEffect(() => {
-        if(tgID) users.fetchClassmaets(tgID)
-    }, [tgID])
+        if (tgID) {
+            setSkip(false);
+        }
+    }, [tgID]);
 
-    if(users.isLoading === true) return <Loading />
+    const { data: classmates, isLoading, isError } = useGetClassmatesQuery(tgID!, {
+        skip: skip || !tgID
+    });
 
-    if(isAuthenticated === false && loading === false) return <NoAuth />
+    if (isLoading) return <Loading />;
+    if (isError) return <div>Error loading classmates</div>;
+
     return (
         <div className={itemStyles.items}>
-            {users.classmates && (
-                <>
-                    {users.classmates.map(user => (
-                        <><UserTopCard user={user}/></>
-                    ))}
-                </>
+            {classmates && classmates.length > 0 ? (
+                classmates.map(user => (
+                    <UserTopCard key={user.id} user={user} />
+                ))
+            ) : (
+                <div>No classmates found</div>
             )}
         </div>
-    )
-})
+    );
+};
 
-export default Classmates
+export default Classmates;

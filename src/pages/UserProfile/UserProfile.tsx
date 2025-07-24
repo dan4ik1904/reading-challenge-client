@@ -1,48 +1,54 @@
-import { observer } from "mobx-react-lite"
-import Loading from "../../components/UI/Loading/Loading"
-import MeInfo from "../../components/UI/Me/MeInfo"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
-import users from "../../stores/users"
-import books from "../../stores/books"
+import Loading from "../../components/UI/Loading/Loading"
+import MeInfo from "../../components/UI/Me/MeInfo"
 import TopFiveBook from "../../components/UI/TopItems/TopFiveBook"
 import TopFiveUser from "../../components/UI/TopItems/TopFiveUser"
 import itemStyles from '../../css/Item.module.css'
+import { useGetBooksUserQuery } from '../../services/booksApi'
+import { useGetOneUserQuery, useLazyGetTopFiveUsersQuery } from '../../services/userApi'
 
+const UserProfile = () => {
+  const params = useParams();
+  const userId = params.userId as string;
 
-const UserProfile = observer(() => {
+  // Fetch user data
+  const { data: user, isLoading: userLoading } = useGetOneUserQuery(userId, { skip: !userId });
+  
+  // Fetch user's books
+  const { data: userBooks = [], isLoading: booksLoading } = useGetBooksUserQuery(userId, { skip: !userId });
+  
+  // Fetch top users with manual trigger
+  const [fetchTopFive, { data: topFiveUsers, isLoading: topUsersLoading }] = useLazyGetTopFiveUsersQuery();
 
-    // const {isAuthenticated, loading, data} = useAuth()
+  useEffect(() => {
+    if (userId) {
+      fetchTopFive();
+    }
+  }, [userId, fetchTopFive]);
 
-    const params = useParams()
-    const userId = params.userId
+  const isLoading = userLoading || booksLoading || topUsersLoading;
 
-    useEffect(() => {
-        const fetch = () => {
-            users.resetTopFiveUsers()
-            .then(() => {
-                if(userId) {
-                    Promise.all([
-                    users.fetchUser(userId),
-                    books.fetchBooksUser(userId),
-                    users.fetchTopFiveUsers()
-                ]) 
-            }
-            }) 
-            
-        }
-        fetch()
-    }, [])
+  if (isLoading) return <Loading />;
+  if (!user) return null;
 
-    if(users.isLoading === true) return <Loading />
-    if(!users.oneUser) return <></>
-    return (
-        <div className={itemStyles.items}>
-            <MeInfo me={users.oneUser}/>
-            {users.oneUser && <TopFiveBook currentUser={users.oneUser} title="Топ 5 книг" books={books.userBooks} />}
-            <TopFiveUser title="В топ 5 лицея" user={users.oneUser} users={users.topFiveUsers} />
-        </div>
-    )
-})
+  return (
+    <div className={itemStyles.items}>
+      <MeInfo me={user} />
+      <TopFiveBook 
+        currentUser={user} 
+        title="Топ 5 книг" 
+        books={userBooks} 
+      />
+      {topFiveUsers && (
+        <TopFiveUser 
+          title="В топ 5 лицея" 
+          user={user} 
+          users={topFiveUsers} 
+        />
+      )}
+    </div>
+  );
+};
 
-export default UserProfile
+export default UserProfile;

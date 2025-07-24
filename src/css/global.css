@@ -32,7 +32,7 @@
   body {
     overflow-x: hidden;
     margin: 0;
-    background-color: #242424;
+    background-color: #000;
     color: rgba(255, 255, 255, 0.87);
     min-height: 100vh;
   }
@@ -73,4 +73,14 @@
       background-color: #f9f9f9;
     }
   }
-  
+
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.item {
+  background-color: #19191B;
+  border-radius: 25px;
+  padding: 15px;
+}

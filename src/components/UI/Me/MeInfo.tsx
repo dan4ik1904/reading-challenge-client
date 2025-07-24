@@ -1,24 +1,29 @@
 import { FC } from 'react'
+import { BiSolidSpreadsheet } from 'react-icons/bi'
+import { FaBook } from 'react-icons/fa6'
+import { IoLogOut } from "react-icons/io5"
+import pageStyles from '../../../css/page.module.css'
 import { IUser } from '../../../types/user.interface'
-import { IoLogOut } from "react-icons/io5";
-import users from '../../../stores/users';
-import { FaBook } from 'react-icons/fa6';
-import { BiSolidSpreadsheet } from 'react-icons/bi';
 import styles from './Me.module.css'
 
 
 interface IProps {
-    me: IUser,
-    thisMe?: boolean
+    me: IUser;
+    thisMe?: boolean;
+    onLogout?: () => void;
 }
 
-const MeInfo: FC<IProps> = ({me, thisMe}: IProps) => {
-
+const MeInfo: FC<IProps> = ({ me, thisMe, onLogout }) => {
     return (
-        <div className={styles.me__item}>
-            {thisMe && (
+        <div className={styles.me__item + ' ' + pageStyles.page__item}>
+            {thisMe && onLogout && (
                 <div className={styles.delete} style={{ cursor: 'pointer' }}>
-                    <IoLogOut fontSize={'30px'} color='red' onClick={() => users.isAvtiveLogoutButton = true} />
+                    <IoLogOut 
+                        fontSize={'30px'} 
+                        color='red' 
+                        onClick={onLogout} 
+                        aria-label="Logout"
+                    />
                 </div> 
             )}
             <div className={styles.me__avatar__wrapper}>
@@ -38,7 +43,6 @@ const MeInfo: FC<IProps> = ({me, thisMe}: IProps) => {
             </div>
         </div>
     )
-    
 }
 
 export default MeInfo

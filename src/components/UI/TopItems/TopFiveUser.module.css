@@ -1,0 +1,77 @@
+.title {
+    text-align: center;
+}
+
+.participantsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.participant {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.participant:hover {
+    background-color: #333;
+    transform: translateX(5px);
+}
+
+.participant__place {
+    margin-right: 20px;
+    font-weight: bold;
+    width: 24px;
+    text-align: center;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.participant__name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+}
+
+.participant__info {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+}
+
+/* Current user highlight */
+.currentUser {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 0 2px #17999D;
+}
+
+/* First place styles */
+.firstPlace {
+    background-color: #3a3a3a;
+    border-left: 4px solid gold;
+}
+
+.firstPlace .participant__place {
+    color: gold;
+}
+
+.crown {
+    font-size: 16px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
